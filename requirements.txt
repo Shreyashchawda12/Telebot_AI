@@ -1,7 +1,7 @@
 # Core data handling
 pandas
 openpyxl  # Required to read Excel files (.xlsx)
-
+nest_asyncio
 selenium
 webdriver_manager
 # MongoDB (Atlas)
