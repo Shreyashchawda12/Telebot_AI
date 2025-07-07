@@ -1,0 +1,27 @@
+# Core data handling
+pandas
+openpyxl  # Required to read Excel files (.xlsx)
+
+selenium
+webdriver_manager
+# MongoDB (Atlas)
+motor           # Async MongoDB driver
+python-dotenv   # For .env file config
+
+# LLMs and Agentic AI
+langchain
+langgraph
+openai
+
+# Vector database (you can switch between these)
+chromadb        # Local embedding store (optional)
+pinecone-client # If using Pinecone
+
+# Telegram bot
+python-telegram-bot==20.3
+
+# Frontend (optional)
+streamlit
+
+# Utility
+tqdm            # Progress bars
