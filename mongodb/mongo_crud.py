@@ -1,12 +1,24 @@
-from pymongo import MongoClient
 import os
+from pymongo import MongoClient
+import streamlit as st
+from dotenv import load_dotenv
 
-# Use Mongo URI from environment variable or Streamlit secrets
-MONGO_URI = os.getenv("MONGO_URI", "your-default-mongodb-uri")
+# Load .env if running locally
+load_dotenv()
+
+# Read Mongo URI and DB name from secrets or env
+if "MONGO_URI" in st.secrets:
+    MONGO_URI = st.secrets["MONGO_URI"]
+    MONGO_DB = st.secrets["MONGO_DB"]
+else:
+    MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017")
+    MONGO_DB = os.getenv("MONGO_DB", "TELCOM_AI")
+
+# Connect
 client = MongoClient(MONGO_URI)
-db = client.get_default_database()
+db = client[MONGO_DB]  # explicitly define DB
 
-# ✅ Insert many records (SYNC)
+# Insert alarms
 def insert_bulk_alarms(records, collection_name):
     if not records:
         return []
@@ -14,7 +26,7 @@ def insert_bulk_alarms(records, collection_name):
     result = collection.insert_many(records)
     return result.inserted_ids
 
-# ✅ Fetch open alarms (SYNC)
+# Get open alarms
 def get_open_alarms(collection_name):
     collection = db[collection_name]
     return list(collection.find({"EsclationStatus": "OPEN"}))
